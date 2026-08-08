@@ -77,6 +77,19 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 .nav-search input::placeholder{color:var(--gray)}
 @media(max-width:900px){.nav-search{display:none}}
 .nav-logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--black);text-decoration:none;cursor:pointer;background:none;border:none}.nav-logo .wm-lega{font-style:normal}
+/* BRAND WORDMARK — single source of truth for every LEGAS-C logo lockup:
+   "LEGAS" green, hyphen in ink, "C" navy. Dark surfaces get lightened
+   equivalents so the ink hyphen never disappears into the background. */
+.wm-lega,.wm-s{color:#1B5E3A}
+.wm-hyphen{color:#0D0D0D}
+.wm-c{color:#1B3358}
+[data-theme="dark"] .wm-lega,[data-theme="dark"] .wm-s{color:#3FAF7D}
+[data-theme="dark"] .wm-hyphen{color:#FFFFFF}
+[data-theme="dark"] .wm-c{color:#6D9FE0}
+/* chatbot header sits on dark ink in both themes */
+.lc-header-name .wm-lega,.lc-header-name .wm-s{color:#3FAF7D}
+.lc-header-name .wm-hyphen{color:#FFFFFF}
+.lc-header-name .wm-c{color:#6D9FE0}
 .nav-links{display:flex;gap:8px;list-style:none}
 .nav-links button{color:var(--gray);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;padding:0 18px;height:64px;display:flex;align-items:center;gap:7px;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer}
 .nav-links button:hover,.nav-links button.active{color:var(--black);border-bottom-color:var(--teal)}
@@ -613,7 +626,7 @@ footer{background:var(--gray-light);border-top:1px solid var(--border)}
   <div style="position:relative;width:17px;height:24px">
     <img class="heart-logo" alt="LEGAS-C tree logo" style="width:17px;height:24px;object-fit:contain">
   </div>
-  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;color:var(--black);white-space:nowrap;line-height:1">LEGAS-C</span>
+  <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.5rem;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;line-height:1"><span class="wm-lega">LEGAS</span><span class="wm-hyphen">-</span><span class="wm-c">C</span></span>
 </button>
   <ul class="nav-links">
     <li><button data-view="scores" onclick="go('scores')">⚽ Scores</button></li>
@@ -653,7 +666,7 @@ footer{background:var(--gray-light);border-top:1px solid var(--border)}
         <img class="heart-logo" alt="LEGAS-C tree logo" style="width:178px;height:250px;object-fit:contain">
       </div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:3.2rem;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;line-height:1">
-        <span style="color:#1B5E3A">LEGA</span><span style="position:relative;display:inline-flex;align-items:center;justify-content:center"><svg style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none" width="1.65em" height="1.3em" viewBox="0 0 54 44"><ellipse cx="27" cy="22" rx="25" ry="20" fill="none" stroke="#B5305A" stroke-width="2.5"/></svg><span style="position:relative;z-index:1;color:#1B3358;padding:0 .05em">S-C</span></span>
+        <span class="wm-lega">LEGA</span><span style="position:relative;display:inline-flex;align-items:center;justify-content:center"><svg style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none" width="1.65em" height="1.3em" viewBox="0 0 54 44"><ellipse cx="27" cy="22" rx="25" ry="20" fill="none" stroke="#B5305A" stroke-width="2.5"/></svg><span style="position:relative;z-index:1;padding:0 .05em"><span class="wm-s">S</span><span class="wm-hyphen">-</span><span class="wm-c">C</span></span></span>
       </div>
     </div>
   </div>
@@ -1666,13 +1679,15 @@ footer{background:var(--gray-light);border-top:1px solid var(--border)}
 <!-- CHATBOT WIDGET -->
 <button id="lc-bot-toggle" aria-label="Open LEGAS-C assistant" onclick="lcToggle()">
   <span id="lc-bot-badge"></span>
-  <img class="heart-logo ico-chat" alt="LEGAS-C tree logo" style="width:18px;height:26px;object-fit:contain">
-  <svg class="ico-close" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="var(--black)" stroke-width="2" stroke-linecap="round"/></svg>
+  <img class="heart-logo heart-logo-fixed ico-chat" alt="LEGAS-C tree logo" style="width:18px;height:26px;object-fit:contain">
+  <!-- the toggle circle is hardcoded white in both themes, so this X must stay
+       dark — var(--black) inverts to white in dark mode and vanished here -->
+  <svg class="ico-close" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round"/></svg>
 </button>
 <div id="lc-bot-window">
   <div class="lc-header">
-    <div class="lc-avatar"><img class="heart-logo" alt="LEGAS-C tree logo" style="width:18px;height:26px;object-fit:contain"></div>
-    <div><div class="lc-header-name"><span style="color:#1B5E3A">LEGA</span><span style="position:relative;display:inline-flex;align-items:center;justify-content:center"><svg style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none" width="1.65em" height="1.3em" viewBox="0 0 54 44"><ellipse cx="27" cy="22" rx="25" ry="20" fill="none" stroke="#B5305A" stroke-width="2.5"/></svg><span style="position:relative;z-index:1;color:#B5305A;padding:0 .05em">S-C</span></span> Assistant</div><div class="lc-header-status"><span class="lc-status-dot"></span> Online — Ask me anything</div></div>
+    <div class="lc-avatar"><img class="heart-logo heart-logo-fixed" alt="LEGAS-C tree logo" style="width:18px;height:26px;object-fit:contain"></div>
+    <div><div class="lc-header-name"><span class="wm-lega">LEGA</span><span style="position:relative;display:inline-flex;align-items:center;justify-content:center"><svg style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none" width="1.65em" height="1.3em" viewBox="0 0 54 44"><ellipse cx="27" cy="22" rx="25" ry="20" fill="none" stroke="#B5305A" stroke-width="2.5"/></svg><span style="position:relative;z-index:1;padding:0 .05em"><span class="wm-s">S</span><span class="wm-hyphen">-</span><span class="wm-c">C</span></span></span> Assistant</div><div class="lc-header-status"><span class="lc-status-dot"></span> Online — Ask me anything</div></div>
   </div>
   <div class="lc-messages" id="lc-messages"></div>
   <div class="lc-typing" id="lc-typing"><span></span><span></span><span></span></div>
@@ -1807,13 +1822,20 @@ footer{background:var(--gray-light);border-top:1px solid var(--border)}
   .age-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
-<script>const HEART_LOGO_SRC = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgNDIwIj4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iaGVhcnRDbGlwIj4KICAgICAgPHBhdGggZD0iTTE0MCwzNjAgQzY2LDMwMCAyNiwyMzUgMjYsMTgwIEMyNiwxMjAgNzAsODUgMTQwLDE1NSBDMjEwLDg1IDI1NCwxMjAgMjU0LDE4MCBDMjU0LDIzNSAyMTQsMzAwIDE0MCwzNjAgWiIvPgogICAgPC9jbGlwUGF0aD4KICA8L2RlZnM+CgogIDwhLS0gdHdvLXRvbmUgY2Fub3B5IGZpbGwgLS0+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2hlYXJ0Q2xpcCkiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjVFM0EiLz4KICAgIDxyZWN0IHg9IjE0MCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjMzNTgiLz4KICA8L2c+CgogIDwhLS0gYm9sZCBIYXJpbmctc3R5bGUgb3V0bGluZSAtLT4KICA8cGF0aCBkPSJNMTQwLDM2MCBDNjYsMzAwIDI2LDIzNSAyNiwxODAgQzI2LDEyMCA3MCw4NSAxNDAsMTU1IEMyMTAsODUgMjU0LDEyMCAyNTQsMTgwIEMyNTQsMjM1IDIxNCwzMDAgMTQwLDM2MCBaIgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gdHJ1bms6IHR3byBncm91bmRlZCBsZWdzLCBib3RoIHdpdGggYSBmbGF0IGJhc2UgLS0+CiAgPHBhdGggZD0iTTExNywzNTIgTDEzMSwzNTIgTDEzMSw0MDAgTDEzOSw0MDAgTDEzOSw0MTAgTDEwOSw0MTAgTDEwOSw0MDAgTDExNyw0MDAgWiIgZmlsbD0iIzAwMCIvPgogIDxwYXRoIGQ9Ik0xNDksMzUyIEwxNjMsMzUyIEwxNjMsNDAwIEwxODUsNDAwIEwxODUsNDEwIEwxNDksNDEwIFoiIGZpbGw9IiMwMDAiLz4KCiAgPCEtLSBsZWFmIHNwcmlncyAtLT4KICA8cGF0aCBkPSJNNzAsODUgTDM4LDQwIEw4NCw2NiBaIiBmaWxsPSIjMDAwIi8+CiAgPHBhdGggZD0iTTIxMCw4NSBMMjQyLDQwIEwxOTYsNjYgWiIgZmlsbD0iIzAwMCIvPgoKICA8IS0tIEhhcmluZy1zdHlsZSBlbmVyZ3kgZGFzaGVzIC0tPgogIDxsaW5lIHgxPSIzMCIgeTE9IjM1IiB4Mj0iMTAiIHkyPSIxMCIgc3Ryb2tlPSIjQjUzMDVBIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMjUwIiB5MT0iMzUiIHgyPSIyNzAiIHkyPSIxMCIgc3Ryb2tlPSIjQjUzMDVBIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8bGluZSB4MT0iMTQwIiB5MT0iNjAiIHgyPSIxNDAiIHkyPSIyOCIgc3Ryb2tlPSIjQjUzMDVBIiBzdHJva2Utd2lkdGg9IjEyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+Cg==";
+<script>const HEART_LOGO_SRC = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgNDIwIj4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iaGVhcnRDbGlwIj4KICAgICAgPHBhdGggZD0iTTE0MCwzNjAgQzY2LDMwMCAyNiwyMzUgMjYsMTgwIEMyNiwxMjAgNzAsODUgMTQwLDE1NSBDMjEwLDg1IDI1NCwxMjAgMjU0LDE4MCBDMjU0LDIzNSAyMTQsMzAwIDE0MCwzNjAgWiIvPgogICAgPC9jbGlwUGF0aD4KICA8L2RlZnM+CgogIDwhLS0gVHJ1bmsgcmVhZHMgYXMgIjFMIi4gRHJhd24gZmlyc3Qgc28gdGhlIGNhbm9weSBwYWludHMgb3ZlciB0aGUgdG9wcywKICAgICAgIGdpdmluZyBhIGNsZWFuIGpvaW4gd2hlcmV2ZXIgdGhlIGxlZ3MgbWVldCB0aGUgaGVhcnQncyBiYXNlLiAtLT4KICA8IS0tICIxIjogc3RlbSArIGFuZ2xlZCBmbGFnICsgYmFzZSBzZXJpZiwgYXMgb25lIHNvbGlkIGdseXBoIC0tPgogIDxwYXRoIGQ9Ik0xMTgsMzAwIEwxMTgsMzk4IEwxMzIsMzk4IEwxMzIsNDEwIEw5MCw0MTAgTDkwLDM5OCBMMTA0LDM5OCBMMTA0LDM3MCBMOTAsMzgxIEw5MCwzNjggTDEwNCwzNTIgTDEwNCwzMDAgWiIgZmlsbD0iIzAwMCIvPgogIDwhLS0gIkwiOiBzdGVtICsgZm9vdCAtLT4KICA8cGF0aCBkPSJNMTQ4LDMwMCBMMTYyLDMwMCBMMTYyLDM5OCBMMTkwLDM5OCBMMTkwLDQxMCBMMTQ4LDQxMCBaIiBmaWxsPSIjMDAwIi8+CgogIDwhLS0gdHdvLXRvbmUgY2Fub3B5IGZpbGwgLS0+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2hlYXJ0Q2xpcCkiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjVFM0EiLz4KICAgIDxyZWN0IHg9IjE0MCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjMzNTgiLz4KICA8L2c+CgogIDwhLS0gYm9sZCBIYXJpbmctc3R5bGUgb3V0bGluZSAtLT4KICA8cGF0aCBkPSJNMTQwLDM2MCBDNjYsMzAwIDI2LDIzNSAyNiwxODAgQzI2LDEyMCA3MCw4NSAxNDAsMTU1IEMyMTAsODUgMjU0LDEyMCAyNTQsMTgwIEMyNTQsMjM1IDIxNCwzMDAgMTQwLDM2MCBaIgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gbGVhZiBzcHJpZ3MgLS0+CiAgPHBhdGggZD0iTTcwLDg1IEwzOCw0MCBMODQsNjYgWiIgZmlsbD0iIzAwMCIvPgogIDxwYXRoIGQ9Ik0yMTAsODUgTDI0Miw0MCBMMTk2LDY2IFoiIGZpbGw9IiMwMDAiLz4KCiAgPCEtLSBIYXJpbmctc3R5bGUgZW5lcmd5IGRhc2hlcyAtLT4KICA8bGluZSB4MT0iMzAiIHkxPSIzNSIgeDI9IjEwIiB5Mj0iMTAiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjI1MCIgeTE9IjM1IiB4Mj0iMjcwIiB5Mj0iMTAiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjYwIiB4Mj0iMTQwIiB5Mj0iMjgiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPgo=";
+const HEART_LOGO_SRC_DARK = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyODAgNDIwIj4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iaGVhcnRDbGlwIj4KICAgICAgPHBhdGggZD0iTTE0MCwzNjAgQzY2LDMwMCAyNiwyMzUgMjYsMTgwIEMyNiwxMjAgNzAsODUgMTQwLDE1NSBDMjEwLDg1IDI1NCwxMjAgMjU0LDE4MCBDMjU0LDIzNSAyMTQsMzAwIDE0MCwzNjAgWiIvPgogICAgPC9jbGlwUGF0aD4KICA8L2RlZnM+CgogIDwhLS0gVHJ1bmsgcmVhZHMgYXMgIjFMIi4gRHJhd24gZmlyc3Qgc28gdGhlIGNhbm9weSBwYWludHMgb3ZlciB0aGUgdG9wcywKICAgICAgIGdpdmluZyBhIGNsZWFuIGpvaW4gd2hlcmV2ZXIgdGhlIGxlZ3MgbWVldCB0aGUgaGVhcnQncyBiYXNlLiAtLT4KICA8IS0tICIxIjogc3RlbSArIGFuZ2xlZCBmbGFnICsgYmFzZSBzZXJpZiwgYXMgb25lIHNvbGlkIGdseXBoIC0tPgogIDxwYXRoIGQ9Ik0xMTgsMzAwIEwxMTgsMzk4IEwxMzIsMzk4IEwxMzIsNDEwIEw5MCw0MTAgTDkwLDM5OCBMMTA0LDM5OCBMMTA0LDM3MCBMOTAsMzgxIEw5MCwzNjggTDEwNCwzNTIgTDEwNCwzMDAgWiIgZmlsbD0iI0ZGRiIvPgogIDwhLS0gIkwiOiBzdGVtICsgZm9vdCAtLT4KICA8cGF0aCBkPSJNMTQ4LDMwMCBMMTYyLDMwMCBMMTYyLDM5OCBMMTkwLDM5OCBMMTkwLDQxMCBMMTQ4LDQxMCBaIiBmaWxsPSIjRkZGIi8+CgogIDwhLS0gdHdvLXRvbmUgY2Fub3B5IGZpbGwgLS0+CiAgPGcgY2xpcC1wYXRoPSJ1cmwoI2hlYXJ0Q2xpcCkiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjVFM0EiLz4KICAgIDxyZWN0IHg9IjE0MCIgeT0iMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiMxQjMzNTgiLz4KICA8L2c+CgogIDwhLS0gYm9sZCBIYXJpbmctc3R5bGUgb3V0bGluZSAtLT4KICA8cGF0aCBkPSJNMTQwLDM2MCBDNjYsMzAwIDI2LDIzNSAyNiwxODAgQzI2LDEyMCA3MCw4NSAxNDAsMTU1IEMyMTAsODUgMjU0LDEyMCAyNTQsMTgwIEMyNTQsMjM1IDIxNCwzMDAgMTQwLDM2MCBaIgogICAgICAgIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGRiIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CgogIDwhLS0gbGVhZiBzcHJpZ3MgLS0+CiAgPHBhdGggZD0iTTcwLDg1IEwzOCw0MCBMODQsNjYgWiIgZmlsbD0iI0ZGRiIvPgogIDxwYXRoIGQ9Ik0yMTAsODUgTDI0Miw0MCBMMTk2LDY2IFoiIGZpbGw9IiNGRkYiLz4KCiAgPCEtLSBIYXJpbmctc3R5bGUgZW5lcmd5IGRhc2hlcyAtLT4KICA8bGluZSB4MT0iMzAiIHkxPSIzNSIgeDI9IjEwIiB5Mj0iMTAiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjI1MCIgeTE9IjM1IiB4Mj0iMjcwIiB5Mj0iMTAiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPGxpbmUgeDE9IjE0MCIgeTE9IjYwIiB4Mj0iMTQwIiB5Mj0iMjgiIHN0cm9rZT0iI0I1MzA1QSIgc3Ryb2tlLXdpZHRoPSIxMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPgo=";
 (function injectHeartLogos() {
   function apply() {
+    // Ink is black on light surfaces, white on dark ones. Logos marked
+    // .heart-logo-fixed sit on permanently-white chrome (the chat bubble and
+    // its avatar) and must keep black ink regardless of theme.
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark';
     document.querySelectorAll('img.heart-logo').forEach(function(img) {
-      img.src = HEART_LOGO_SRC;
+      img.src = (dark && !img.classList.contains('heart-logo-fixed'))
+        ? HEART_LOGO_SRC_DARK : HEART_LOGO_SRC;
     });
   }
+  window.refreshHeartLogos = apply;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', apply);
   } else {
@@ -3016,6 +3038,7 @@ function applyTheme(theme) {
   if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
   var mobIcon = document.getElementById('mn-theme-icon');
   if (mobIcon) mobIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  if (window.refreshHeartLogos) window.refreshHeartLogos();
   localStorage.setItem('lc-theme', theme);
 }
 function toggleTheme() {
